@@ -84,6 +84,19 @@ fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
 }
 
 
+#' Convert a function from multiple function arguments to a
+#' single function
+#'
+#' @param func The function that takes in two function arguments
+#' @param arg_fn The function (first) argument name of func
+#' @param arg_gr The gradient (second) argument name of func
+#'
+#' @return A new function that evaluates the two arguments together
+#' @export
+#'
+#' @examples
+#' lbfgs_share <- make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')
+#' make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')(quad_share, vars=c(5,-4))
 make_share <- function(func, arg_fn, arg_gr) {
   function(fngr, ...) {
     env <- grad_share(fngr)
