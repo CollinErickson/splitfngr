@@ -49,17 +49,17 @@ grad_share <- function(fn_gr) {
 #' @param recalculate_indices Indices for which the values should
 #' be recalculated.
 #'
-#' @return
+#' @return An environment where the function values are calculated.
 #' @export
 #'
 #' @examples
 #' tfunc <- function(x) {list(x, x+1, x+2, x+3, x+4)}
 #' tenv <- fngr(tfunc)
-#' tenv(1)(0)
-#' tenv(3)(0)
-#' tenv(3)(1)
-#' tenv(1)(23.4)
-#' tenv(4)()
+#' tenv$f(1)(0)
+#' tenv$f(3)(0)
+#' tenv$f(3)(1)
+#' tenv$f(1)(23.4)
+#' tenv$f(4)()
 fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
   env <- new.env()
   env$f <- function(i, check=check_all, recalculate = any(i==recalculate_indices)) {
@@ -95,6 +95,7 @@ fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
 #' @export
 #'
 #' @examples
+#' quad_share <- function(x){list(sum(x^4), 4*x^3)}
 #' lbfgs_share <- make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')
 #' make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')(quad_share, vars=c(5,-4))
 make_share <- function(func, arg_fn, arg_gr) {
@@ -106,5 +107,3 @@ make_share <- function(func, arg_fn, arg_gr) {
     do.call(what=func, args=args_list)
   }
 }
-# make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')
-# make_share(lbfgs::lbfgs, 'call_eval', 'call_grad')(quad_share, vars=c(5,-4))
