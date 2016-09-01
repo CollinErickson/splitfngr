@@ -4,7 +4,9 @@ Title: Combined evaluation and split access of functions
 Version: 0.1.0
 Author: Collin Erickson
 Maintainer: Collin Erickson <collinberickson@gmail.com>
-Description: Some R functions, such as optim, require a function
+Description: Split combined function (fn) and gradient (gr)
+  evaluations to separate functions
+  Some R functions, such as optim, require a function
   its gradient passed as separate arguments. When these are
   expensive to calculate it may be much faster to calculate
   the function and gradient together since they often share

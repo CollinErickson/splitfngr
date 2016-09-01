@@ -31,6 +31,7 @@ gradient are expensive to calculate and can be
 calculated faster together than separate.
 }
 \examples{
+quad_share <- function(x){list(sum(x^4), 4*x^3)}
 optim_share(par=c(3, -5), quad_share, method="BFGS")
 }
 

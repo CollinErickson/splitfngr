@@ -16,6 +16,7 @@
 #' @importFrom stats optim
 #'
 #' @examples
+#' quad_share <- function(x){list(sum(x^4), 4*x^3)}
 #' optim_share(par=c(3, -5), quad_share, method="BFGS")
 optim_share <- function(par, fngr, ...) {
   env <- grad_share(fngr)
