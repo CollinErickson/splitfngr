@@ -3,6 +3,8 @@
 splitfngr
 =========
 
+[![Travis-CI Build Status](https://travis-ci.org/CollinErickson/splitfngr.svg?branch=master)](https://travis-ci.org/CollinErickson/splitfngr)
+
 Sometimes multiple values are returned by a single function. This makes sense when their combined evaluation is faster than separate evaluations, such as function and corresponding gradient values which require solving the same matrix system. If the user wants to have separate functions for the function and gradient, such as when passing to an optimization routine.
 
 Functions provided in this package allow this to be done in a general situation.

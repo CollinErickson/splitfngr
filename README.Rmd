@@ -15,6 +15,9 @@ knitr::opts_chunk$set(
 
 # splitfngr
 
+[![Travis-CI Build Status](https://travis-ci.org/CollinErickson/splitfngr.svg?branch=master)](https://travis-ci.org/CollinErickson/splitfngr)
+
+
 Sometimes multiple values are returned by a single function.
 This makes sense when their combined evaluation is faster
 than separate evaluations, such as function and corresponding
