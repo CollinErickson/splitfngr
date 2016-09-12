@@ -1,6 +1,7 @@
 ## Test environments
 
 * local Windows 7 install, R 3.3.1
+* win-builder
 * Linux (via Travis)
 
 ## R CMD check results
