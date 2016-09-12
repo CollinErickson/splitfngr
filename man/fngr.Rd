@@ -2,32 +2,41 @@
 % Please edit documentation in R/splitfngr.R
 \name{fngr}
 \alias{fngr}
-\title{Access a list of values separately but calculate them together.}
+\title{Access a list of values separately but calculate them together.
+This function generalizes grad_share for any number of functions.}
 \usage{
-fngr(func, check_all = FALSE, recalculate_indices = 1)
+fngr(func, evalForNewX = TRUE, recalculate_indices = c(),
+  check_all = FALSE)
 }
 \arguments{
 \item{func}{Function that returns a list of values}
 
-\item{check_all}{Should it check that the accessed values were
-calculated at the current input?}
+\item{evalForNewX}{Should the function reevaluate for any new x?
+Recommended.}
 
 \item{recalculate_indices}{Indices for which the values should
-be recalculated.}
+be recalculated. Ignored if evalForNewX is true. Use this if
+you don't want to pass x to dependent functions, or if you know
+other indices won't need to be recalculated.}
+
+\item{check_all}{Should it check that the accessed values were
+calculated at the current input? Ignored if evalForNewX is true.
+Will give a warning but still return the stored value.}
 }
 \value{
 An environment where the function values are calculated.
 }
 \description{
 Access a list of values separately but calculate them together.
+This function generalizes grad_share for any number of functions.
 }
 \examples{
 tfunc <- function(x) {list(x, x+1, x+2, x+3, x+4)}
-tenv <- fngr(tfunc)
-tenv$f(1)(0)
-tenv$f(3)(0)
-tenv$f(3)(1)
-tenv$f(1)(23.4)
-tenv$f(4)()
+f <- fngr(tfunc)
+f(1)(0)
+f(3)(0)
+f(3)(1)
+f(1)(23.4)
+f(4)()
 }
 

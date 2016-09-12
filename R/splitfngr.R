@@ -24,16 +24,23 @@
 #' share$gr(2)
 grad_share <- function(fn_gr) {
   env <- new.env()
+  env$x_last <- NULL
   env$fn <- function(x) {
-    out <- fn_gr(x)
-    env$x_last <- x
-    env$fn_val <- out[[1]]
-    env$gr_val <- out[[2]]
+    if (is.null(env$x_last) || env$x_last != x) {
+      out <- fn_gr(x)
+      env$x_last <- x
+      env$fn_val <- out[[1]]
+      env$gr_val <- out[[2]]
+    }
     env$fn_val
   }
   env$gr <- function(x = NULL) {
-    # Can check if evaluated at same value, but will only slow it down
-    #if (!is.null(x) && !any(is.nan(x)) && x != env$x_last) {warning("gr called at different x than fn")}
+    if (is.null(env$x_last) || env$x_last != x) {
+      out <- fn_gr(x)
+      env$x_last <- x
+      env$fn_val <- out[[1]]
+      env$gr_val <- out[[2]]
+    }
     env$gr_val
   }
   env
@@ -41,30 +48,54 @@ grad_share <- function(fn_gr) {
 
 
 #' Access a list of values separately but calculate them together.
-#'
+#' This function generalizes grad_share for any number of functions.
 #'
 #' @param func Function that returns a list of values
+#' @param evalForNewX Should the function reevaluate for any new x?
+#' Recommended.
 #' @param check_all Should it check that the accessed values were
-#' calculated at the current input?
+#' calculated at the current input? Ignored if evalForNewX is true.
+#' Will give a warning but still return the stored value.
 #' @param recalculate_indices Indices for which the values should
-#' be recalculated.
+#' be recalculated. Ignored if evalForNewX is true. Use this if
+#' you don't want to pass x to dependent functions, or if you know
+#' other indices won't need to be recalculated.
+#'
 #'
 #' @return An environment where the function values are calculated.
 #' @export
 #'
 #' @examples
 #' tfunc <- function(x) {list(x, x+1, x+2, x+3, x+4)}
-#' tenv <- fngr(tfunc)
-#' tenv$f(1)(0)
-#' tenv$f(3)(0)
-#' tenv$f(3)(1)
-#' tenv$f(1)(23.4)
-#' tenv$f(4)()
-fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
+#' f <- fngr(tfunc)
+#' f(1)(0)
+#' f(3)(0)
+#' f(3)(1)
+#' f(1)(23.4)
+#' f(4)()
+fngr <- function(func, evalForNewX=TRUE,
+                 recalculate_indices = c(),
+                 check_all=FALSE
+                 ) {
+  if (evalForNewX == F & length(recalculate_indices) == 0) {
+    stop("Values will never be calculated")
+  }
   env <- new.env()
-  env$f <- function(i, check=check_all, recalculate = any(i==recalculate_indices)) {
-    function(x=NULL, check_now=check, recalculate_now=recalculate) {
-      if (recalculate_now) {
+  env$x_last <- NULL
+  env$f <- function(i, evalForNewX_=evalForNewX,
+                    recalculate = any(i==recalculate_indices),
+                    check=check_all
+                    ) {
+    function(x=NULL, check_now=check, recalculate_now=recalculate,
+             evalForNewX_now=evalForNewX_
+             ) {
+      browser()
+      if (recalculate_now ||
+          (evalForNewX_now &&
+           ((is.null(env$x_last) && is.null(x)) ||
+            (!is.null(env$x_last) && !is.null(x) && x != env$x_last)
+            ))
+        ) {
         out <- func(x)
         env$x_last <- x
         env$out <- out
@@ -72,7 +103,9 @@ fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
       } else {
         # Can check if evaluated at same value, but will only slow it down
         if (check_now) {
-          if (!is.null(x) && !any(is.nan(x)) && x != env$x_last) {
+          if (!is.null(x) &&
+              !any(is.nan(x)) &&
+              (is.null(env$x_last) || x != env$x_last)) {
             warning("gr called at different x than fn")
           }
         }
@@ -80,7 +113,7 @@ fngr <- function(func, check_all=FALSE, recalculate_indices = 1) {
       env$out[[i]]
     }
   }
-  env
+  env$f
 }
 
 
