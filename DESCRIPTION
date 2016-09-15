@@ -1,7 +1,7 @@
 Package: splitfngr
 Type: Package
 Title: Combined Evaluation and Split Access of Functions
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: Collin Erickson
 Maintainer: Collin Erickson <collinberickson@gmail.com>
 Description:
