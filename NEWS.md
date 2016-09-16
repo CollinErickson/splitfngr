@@ -4,4 +4,4 @@ Packaging first versions of functions. Accepted to CRAN on 9/14/16.
 
 # splitfngr 0.1.1
 
-Add updates here.
+Had to fix some serious bugs with `fngr`.

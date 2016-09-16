@@ -1,5 +1,4 @@
-I submitted this on 9/12 and was given suggestions from Uwe Ligges.
-I made the changes to the DESCRIPTION file and am now resubmitting.
+I had to fix a major problem with the function fngr().
 
 ## Test environments
 
