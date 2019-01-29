@@ -8,3 +8,4 @@ Had to fix some serious bugs with `fngr`. Accepted to CRAN on 9/16/16.
 
 # splitfngr 0.1.2
 
+Adding `nlminb_share`.

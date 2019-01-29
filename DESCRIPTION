@@ -1,7 +1,7 @@
 Package: splitfngr
 Type: Package
 Title: Combined Evaluation and Split Access of Functions
-Version: 0.1.1.9000
+Version: 0.1.2
 Author: Collin Erickson
 Maintainer: Collin Erickson <collinberickson@gmail.com>
 Description:
@@ -17,5 +17,6 @@ Description:
   any number of functions/values, not just for functions and gradients.
 License: GPL-3
 LazyData: TRUE
-RoxygenNote: 5.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.1
 Imports: lbfgs

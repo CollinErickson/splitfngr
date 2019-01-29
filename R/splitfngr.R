@@ -1,3 +1,5 @@
+#' Split function and gradient calculation
+#'
 #' Calculate function and gradient together but access separately.
 #' Reduces computation since they share data in calculation.
 #' Doesn't have to be function and gradient, can be any two

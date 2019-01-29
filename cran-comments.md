@@ -1,8 +1,8 @@
-I had to fix a major problem with the function fngr().
+Added a new function.
 
 ## Test environments
 
-* local Windows 7 install, R 3.3.1
+* local Windows 7 install, R 3.5.2
 * win-builder
 * Linux (via Travis)
 
