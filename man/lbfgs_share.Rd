@@ -19,7 +19,7 @@ Will be passed to lbfgs as vars argument.}
 Result from running lbfgs on the given function
 }
 \description{
-Use lbfgs packages's lbfgs function but pass in a single function
+Use lbfgs function from the lbfgs package but pass in a single function
 that returns both the function and gradient
 together in a list. Useful when the function and
 gradient are expensive to calculate and can be
